@@ -51,8 +51,16 @@ struct BadgeTemplateFlat<'a> {
     msg_link: &'a str,
     /// color for label
     label_color: &'a str,
+    /// text color for label
+    label_text_color: &'a str,
+    /// shadow color for label
+    label_shadow_color: &'a str,
     /// color for message
     msg_color: &'a str,
+    /// text color for message
+    msg_text_color: &'a str,
+    /// shadow color for message
+    msg_shadow_color: &'a str,
     /// link to logo, placed on label side
     logo: &'a str,
     /// title of badge
@@ -107,7 +115,11 @@ pub(crate) fn flat_svg(badge: &Badge, layout: Layout) -> Result<String, BadgeErr
         label_link: &badge.label_link,
         msg_link: &badge.msg_link,
         label_color: &layout.label_color,
+        label_text_color: &layout.label_text_color,
+        label_shadow_color: &layout.label_shadow_color,
         msg_color: &layout.msg_color,
+        msg_text_color: &layout.msg_text_color,
+        msg_shadow_color: &layout.msg_shadow_color,
         logo: &logo_uri,
         full_badge_title: &badge.badge_title,
         label_title: &badge.label_title,
@@ -147,8 +159,16 @@ struct BadgeTemplatePlastic<'a> {
     msg_link: &'a str,
     /// color for label
     label_color: &'a str,
+    /// text color for label
+    label_text_color: &'a str,
+    /// shadow color for label
+    label_shadow_color: &'a str,
     /// color for message
     msg_color: &'a str,
+    /// text color for message
+    msg_text_color: &'a str,
+    /// shadow color for message
+    msg_shadow_color: &'a str,
     /// link to logo, placed on label side
     logo: &'a str,
     /// title of badge
@@ -203,7 +223,11 @@ pub(crate) fn plastic_svg(badge: &Badge, layout: Layout) -> Result<String, Badge
         label_link: &badge.label_link,
         msg_link: &badge.msg_link,
         label_color: &layout.label_color,
+        label_text_color: &layout.label_text_color,
+        label_shadow_color: &layout.label_shadow_color,
         msg_color: &layout.msg_color,
+        msg_text_color: &layout.msg_text_color,
+        msg_shadow_color: &layout.msg_shadow_color,
         logo: &logo_uri,
         full_badge_title: &badge.badge_title,
         label_title: &badge.label_title,
@@ -244,8 +268,12 @@ struct BadgeTemplateFlatSquare<'a> {
     msg_link: &'a str,
     /// color for label
     label_color: &'a str,
+    /// text color for label
+    label_text_color: &'a str,
     /// color for message
     msg_color: &'a str,
+    /// text color for message
+    msg_text_color: &'a str,
     /// link to logo, placed on label side
     logo: &'a str,
     /// title of badge
@@ -289,7 +317,9 @@ pub(crate) fn flat_square_svg(badge: &Badge, layout: Layout) -> Result<String, B
         label_link: &badge.label_link,
         msg_link: &badge.msg_link,
         label_color: &layout.label_color,
+        label_text_color: &layout.label_text_color,
         msg_color: &layout.msg_color,
+        msg_text_color: &layout.msg_text_color,
         logo: &logo_uri,
         full_badge_title: &badge.badge_title,
         label_title: &badge.label_title,
@@ -328,8 +358,12 @@ struct BadgeTemplateForTheBadge<'a> {
     msg_link: &'a str,
     /// color for label
     label_color: &'a str,
+    /// text color for label
+    label_text_color: &'a str,
     /// color for message
     msg_color: &'a str,
+    /// text color for message
+    msg_text_color: &'a str,
     /// link to logo, placed on label side
     logo: &'a str,
     /// title of badge
@@ -373,7 +407,9 @@ pub(crate) fn for_the_badge_svg(badge: &Badge, layout: Layout) -> Result<String,
         label_link: &badge.label_link,
         msg_link: &badge.msg_link,
         label_color: &layout.label_color,
+        label_text_color: &layout.label_text_color,
         msg_color: &layout.msg_color,
+        msg_text_color: &layout.msg_text_color,
         logo: &logo_uri,
         full_badge_title: &badge.badge_title,
         label_title: &badge.label_title,

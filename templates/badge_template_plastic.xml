@@ -28,14 +28,14 @@
     <rect width="{{ left_width + right_width }}" height="{{ badge_height }}" fill="url(#{{ id_smooth }})"/>
   </g>
 
-  <g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="110">
+  <g text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="110">
     {% if !logo.is_empty() %}
     <image x="{{ logo_x }}" y="{{ logo_y }}" width="{{ logo_width }}" height="14" xlink:href="{{ logo }}"/>
     {% endif %}
-    <text aria-hidden="true" x="{{ label_text_x }}" y="140" fill="#010101" fill-opacity=".3" transform="scale(0.1)" textLength="{{ label_text_width }}" lengthAdjust="spacing">{{ label_text }}</text>
-    <text x="{{ label_text_x }}" y="130" transform="scale(0.1)" textLength="{{ label_text_width }}" lengthAdjust="spacing">{{ label_text }}</text>
-    <text aria-hidden="true" x="{{ msg_text_x }}" y="140" fill="#010101" fill-opacity=".3" transform="scale(0.1)" textLength="{{ msg_text_width }}" lengthAdjust="spacing">{{ msg_text }}</text>
-    <text x="{{ msg_text_x }}" y="130" transform="scale(0.1)" textLength="{{ msg_text_width }}" lengthAdjust="spacing">{{ msg_text}}</text>
+    <text aria-hidden="true" x="{{ label_text_x }}" y="140" fill="{{ label_shadow_color }}" fill-opacity=".3" transform="scale(0.1)" textLength="{{ label_text_width }}" lengthAdjust="spacing">{{ label_text }}</text>
+    <text x="{{ label_text_x }}" y="130" transform="scale(0.1)" fill="{{ label_text_color }}" textLength="{{ label_text_width }}" lengthAdjust="spacing">{{ label_text }}</text>
+    <text aria-hidden="true" x="{{ msg_text_x }}" y="140" fill="{{ msg_shadow_color }}" fill-opacity=".3" transform="scale(0.1)" textLength="{{ msg_text_width }}" lengthAdjust="spacing">{{ msg_text }}</text>
+    <text x="{{ msg_text_x }}" y="130" transform="scale(0.1)" fill="{{ msg_text_color }}" textLength="{{ msg_text_width }}" lengthAdjust="spacing">{{ msg_text}}</text>
 
     {% if !badge_link.is_empty() %}
     <a xlink:href="{{ badge_link }}">

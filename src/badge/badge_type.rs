@@ -169,8 +169,16 @@ pub(crate) struct Layout {
     pub logo_y: f32,
     /// the color of the label (left side)
     pub label_color: String,
+    /// the text color of the label (left side)
+    pub label_text_color: String,
+    /// the shadow color of the label (left side)
+    pub label_shadow_color: String,
     /// the color of the message (right side)
     pub msg_color: String,
+    /// the text color of the message (right side)
+    pub msg_text_color: String,
+    /// the shadow color of the message (right side)
+    pub msg_shadow_color: String,
 }
 
 /// Error types that may occur on badge generation.

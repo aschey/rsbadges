@@ -35,6 +35,20 @@ use rusttype::{point, Font, Scale};
 use std::path::Path;
 use unicode_normalization::UnicodeNormalization;
 
+const LIGHT_TEXT_COLOR: &str = "#fff";
+const DARK_TEXT_COLOR: &str = "#333";
+
+const LIGHT_SHADOW_COLOR: &str = "#ccc";
+const DARK_SHADOW_COLOR: &str = "#010101";
+
+// Gamma-adjusted greyscale midpoint normalized to the 0-1 range
+const BRIGHTNESS_THRESHOLD: f32 = 186.0 / 255.0;
+
+pub struct AccentColors {
+    pub text_color: &'static str,
+    pub shadow_color: &'static str,
+}
+
 /// Load a font into Rust.
 /// Docs: https://gitlab.redox-os.org/redox-os/rusttype/-/blob/master/dev/examples/ascii.rs
 pub fn load_font<'a>(bytes: &'static [u8]) -> Result<Font<'a>, BadgeError> {
@@ -60,17 +74,39 @@ pub fn get_text_dims(font: &Font, text: &str, font_size: f32) -> (String, f32) {
 }
 
 /// Verify that the string passed in is a valid color.
-pub fn verify_color(color: &str) -> Result<String, BadgeError> {
-    let valid_color: Rgba = match color.parse() {
-        Ok(c) => c,
-        Err(_) => return Err(BadgeError::ColorNotValid(String::from(color))),
-    };
-    Ok(format!(
+pub fn verify_color(color: &str) -> Result<Rgba, BadgeError> {
+    match color.parse::<Rgba>() {
+        Ok(c) => Ok(c),
+        Err(_) => Err(BadgeError::ColorNotValid(String::from(color))),
+    }
+}
+
+pub fn format_color(color: &Rgba) -> String {
+    format!(
         "rgb({}, {}, {})",
-        valid_color.red * 255.0,
-        valid_color.green * 255.0,
-        valid_color.blue * 255.0
-    ))
+        color.red * 255.0,
+        color.green * 255.0,
+        color.blue * 255.0
+    )
+}
+
+// From https://stackoverflow.com/questions/946544/good-text-foreground-color-for-a-given-background-color/946734#946734
+pub fn get_accent_colors(background_color: &Rgba) -> AccentColors {
+    let brightness = background_color.red * 0.299
+        + background_color.green * 0.587
+        + background_color.blue * 0.114;
+    // Check if the background color requires light or dark text depending on the brightness of the color
+    if brightness <= BRIGHTNESS_THRESHOLD {
+        AccentColors {
+            text_color: LIGHT_TEXT_COLOR,
+            shadow_color: DARK_SHADOW_COLOR,
+        }
+    } else {
+        AccentColors {
+            text_color: DARK_TEXT_COLOR,
+            shadow_color: LIGHT_SHADOW_COLOR,
+        }
+    }
 }
 
 // Thanks, Shepmaster.
