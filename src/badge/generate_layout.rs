@@ -101,8 +101,17 @@ pub(crate) fn plastic(badge: &Badge) -> Result<Layout, BadgeError> {
     layout.msg_text_x *= 10.0;
 
     // Color conversion to string
-    layout.label_color = verify_color(&badge.label_color)?;
-    layout.msg_color = verify_color(&badge.msg_color)?;
+    let label_color = verify_color(&badge.label_color)?;
+    let msg_color = verify_color(&badge.msg_color)?;
+    let label_accent_colors = get_accent_colors(&label_color);
+    let msg_accent_colors = get_accent_colors(&msg_color);
+
+    layout.label_color = format_color(&label_color);
+    layout.msg_color = format_color(&msg_color);
+    layout.label_text_color = label_accent_colors.text_color.to_string();
+    layout.msg_text_color = msg_accent_colors.text_color.to_string();
+    layout.label_shadow_color = label_accent_colors.shadow_color.to_string();
+    layout.msg_shadow_color = msg_accent_colors.shadow_color.to_string();
 
     Ok(layout)
 }
@@ -176,9 +185,17 @@ pub(crate) fn flat_or_square(badge: &Badge) -> Result<Layout, BadgeError> {
     layout.msg_text_x *= 10.0;
 
     // Color conversion to string
-    layout.label_color = verify_color(&badge.label_color)?;
-    layout.msg_color = verify_color(&badge.msg_color)?;
+    let label_color = verify_color(&badge.label_color)?;
+    let msg_color = verify_color(&badge.msg_color)?;
+    let label_accent_colors = get_accent_colors(&label_color);
+    let msg_accent_colors = get_accent_colors(&msg_color);
 
+    layout.label_color = format_color(&label_color);
+    layout.msg_color = format_color(&msg_color);
+    layout.label_text_color = label_accent_colors.text_color.to_string();
+    layout.msg_text_color = msg_accent_colors.text_color.to_string();
+    layout.label_shadow_color = label_accent_colors.shadow_color.to_string();
+    layout.msg_shadow_color = msg_accent_colors.shadow_color.to_string();
     Ok(layout)
 }
 
@@ -247,13 +264,21 @@ pub(crate) fn for_the_badge(badge: &Badge) -> Result<Layout, BadgeError> {
     layout.label_text_x *= 10.0;
     layout.msg_text_x *= 10.0;
 
-    // Color conversion to string
+    let label_color = verify_color(&badge.label_color)?;
+    let msg_color = verify_color(&badge.msg_color)?;
+    let label_accent_colors = get_accent_colors(&label_color);
+    let msg_accent_colors = get_accent_colors(&msg_color);
+
     if badge.label_text.is_empty() {
-        layout.label_color = verify_color(&badge.msg_color)?;
+        layout.label_color = format_color(&msg_color);
     } else {
-        layout.label_color = verify_color(&badge.label_color)?;
+        layout.label_color = format_color(&label_color);
     }
-    layout.msg_color = verify_color(&badge.msg_color)?;
+    layout.msg_color = format_color(&msg_color);
+    layout.label_text_color = label_accent_colors.text_color.to_string();
+    layout.msg_text_color = msg_accent_colors.text_color.to_string();
+    layout.label_shadow_color = label_accent_colors.shadow_color.to_string();
+    layout.msg_shadow_color = msg_accent_colors.shadow_color.to_string();
 
     Ok(layout)
 }
@@ -316,8 +341,17 @@ pub(crate) fn social(badge: &Badge) -> Result<Layout, BadgeError> {
     layout.msg_text_x *= 10.0;
 
     // Color conversion to string
-    layout.label_color = verify_color(&badge.label_color)?;
-    layout.msg_color = verify_color(&badge.msg_color)?;
+    let label_color = verify_color(&badge.label_color)?;
+    let msg_color = verify_color(&badge.msg_color)?;
+    let label_accent_colors = get_accent_colors(&label_color);
+    let msg_accent_colors = get_accent_colors(&msg_color);
+
+    layout.label_color = format_color(&label_color);
+    layout.msg_color = format_color(&msg_color);
+    layout.label_text_color = label_accent_colors.text_color.to_string();
+    layout.msg_text_color = msg_accent_colors.text_color.to_string();
+    layout.label_shadow_color = label_accent_colors.shadow_color.to_string();
+    layout.msg_shadow_color = msg_accent_colors.shadow_color.to_string();
 
     Ok(layout)
 }
