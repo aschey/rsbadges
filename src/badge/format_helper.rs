@@ -102,7 +102,6 @@ pub fn rgb_to_xyz(color_item: f32) -> f32 {
 // which uses the method from this answer: https://stackoverflow.com/a/3943023/2027612 but applies it
 // using the CIE XYZ color space which is a better model for how the eyes perceive colors
 pub fn get_accent_colors(background_color: &Rgba) -> AccentColors {
-    dbg!(background_color);
     let brightness = rgb_to_xyz(background_color.red) * 0.2126
         + rgb_to_xyz(background_color.green) * 0.7152
         + rgb_to_xyz(background_color.blue) * 0.0722;
