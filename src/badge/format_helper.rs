@@ -42,7 +42,7 @@ const LIGHT_SHADOW_COLOR: &str = "#ccc";
 const DARK_SHADOW_COLOR: &str = "#010101";
 
 // Gamma-adjusted greyscale midpoint normalized to the 0-1 range
-const BRIGHTNESS_THRESHOLD: f32 = 186.0 / 255.0;
+const BRIGHTNESS_THRESHOLD: f32 = 0.579;
 
 pub struct AccentColors {
     pub text_color: &'static str,
@@ -90,11 +90,22 @@ pub fn format_color(color: &Rgba) -> String {
     )
 }
 
-// From https://stackoverflow.com/questions/946544/good-text-foreground-color-for-a-given-background-color/946734#946734
+pub fn rgb_to_xyz(color_item: f32) -> f32 {
+    if color_item <= 0.03928 {
+        color_item / 12.92
+    } else {
+        ((color_item + 0.055) / 1.055).powf(2.4)
+    }
+}
+
+// From https://stackoverflow.com/a/75110271/2027612
+// which uses the method from this answer: https://stackoverflow.com/a/3943023/2027612 but applies it
+// using the CIE XYZ color space which is a better model for how the eyes perceive colors
 pub fn get_accent_colors(background_color: &Rgba) -> AccentColors {
-    let brightness = background_color.red * 0.299
-        + background_color.green * 0.587
-        + background_color.blue * 0.114;
+    dbg!(background_color);
+    let brightness = rgb_to_xyz(background_color.red) * 0.2126
+        + rgb_to_xyz(background_color.green) * 0.7152
+        + rgb_to_xyz(background_color.blue) * 0.0722;
     // Check if the background color requires light or dark text depending on the brightness of the color
     if brightness <= BRIGHTNESS_THRESHOLD {
         AccentColors {
