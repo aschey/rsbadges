@@ -184,6 +184,13 @@ fn parse_project_dir_from_args() -> Result<RSBadgesOptions, BadgeError> {
     );
     opts.optflag("h", "help", "Flag. Print arguments to console.");
     opts.optflag(
+        "g",
+        "logo-as-label",
+        "This setting only applied when a logo is supplied AND the label is empty. \
+        If this setting is true, then the logo will use the label background color. \
+        If it is false, it will use the message background color.",
+    );
+    opts.optflag(
         "e",
         "embed-logo",
         "Flag. Include the specified logo data directly \
@@ -260,6 +267,7 @@ fn parse_project_dir_from_args() -> Result<RSBadgesOptions, BadgeError> {
     let msg_title = matches
         .opt_str("msg-title")
         .unwrap_or(badge_default.msg_title);
+    let use_logo_as_label = matches.opt_present("g");
 
     let badge = Badge {
         label_text,
@@ -274,6 +282,7 @@ fn parse_project_dir_from_args() -> Result<RSBadgesOptions, BadgeError> {
         badge_title,
         label_title,
         msg_title,
+        use_logo_as_label,
     };
 
     // Get our style
