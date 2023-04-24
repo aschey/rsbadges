@@ -224,7 +224,7 @@ pub(crate) fn for_the_badge(badge: &Badge) -> Result<Layout, BadgeError> {
     layout.logo_width = 0.0;
     layout.logo_padding = 0.0;
     if !badge.logo.is_empty() {
-        if !badge.label_text.is_empty() {
+        if !badge.label_text.is_empty() || badge.use_logo_as_label {
             layout.logo_padding = 3.0;
         }
         let logo_height = 14.0;
@@ -240,7 +240,7 @@ pub(crate) fn for_the_badge(badge: &Badge) -> Result<Layout, BadgeError> {
     if !badge.label_text.is_empty() {
         layout.label_total_width += 10.0 + (2.0 * layout.label_text_norm.len() as f32)
     } else if !badge.logo.is_empty() {
-        if !badge.label_text.is_empty() {
+        if !badge.label_text.is_empty() || badge.use_logo_as_label {
             layout.label_total_width += 7.0;
         } else {
             layout.label_total_width -= 7.0;
@@ -269,7 +269,7 @@ pub(crate) fn for_the_badge(badge: &Badge) -> Result<Layout, BadgeError> {
     let label_accent_colors = get_accent_colors(&label_color);
     let msg_accent_colors = get_accent_colors(&msg_color);
 
-    if badge.label_text.is_empty() {
+    if badge.label_text.is_empty() && !badge.use_logo_as_label {
         layout.label_color = format_color(&msg_color);
     } else {
         layout.label_color = format_color(&label_color);
