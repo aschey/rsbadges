@@ -107,7 +107,7 @@ pub struct Badge {
     pub label_title: String,
     /// The title to associate with the right side of the badge.
     pub msg_title: String,
-    /// This setting only applied when a logo is supplied AND the label is empty.
+    /// This setting only applies when a logo is supplied AND the label is empty.
     /// If this setting is true, then the logo will use the label background color.
     /// If it is false, it will use the message background color.
     pub use_logo_as_label: bool,

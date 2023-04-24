@@ -186,7 +186,7 @@ fn parse_project_dir_from_args() -> Result<RSBadgesOptions, BadgeError> {
     opts.optflag(
         "g",
         "logo-as-label",
-        "This setting only applied when a logo is supplied AND the label is empty. \
+        "This setting only applies when a logo is supplied AND the label is empty. \
         If this setting is true, then the logo will use the label background color. \
         If it is false, it will use the message background color.",
     );
