@@ -30,7 +30,7 @@
 //! Different helper functions used when formatting a badge for SVG generation.
 
 use super::badge_type::BadgeError;
-use base64::{Engine as _, engine::general_purpose::STANDARD};
+use base64::{engine::general_purpose::STANDARD, Engine as _};
 use css_color::Rgba;
 use rusttype::{point, Font, Scale};
 use std::path::Path;
@@ -133,8 +133,8 @@ pub fn uppercase_first_letter(s: &str) -> String {
 
 /// Create an embeddable logo from the given URI.
 pub fn create_embedded_logo(logo_uri: &str) -> Result<String, BadgeError> {
-    if let Ok(uri) = ureq::get(logo_uri).call() {
-        Ok(uri.into_string().unwrap())
+    if let Ok(mut uri) = ureq::get(logo_uri).call() {
+        Ok(uri.body_mut().read_to_string().unwrap())
     } else {
         Err(BadgeError::CannotEmbedLogo(String::from(logo_uri)))
     }
