@@ -35,6 +35,11 @@ use css_color::Rgba;
 use rusttype::{point, Font, Scale};
 use std::path::Path;
 use unicode_normalization::UnicodeNormalization;
+use ureq::{
+    config::Config,
+    tls::{TlsConfig, TlsProvider},
+    Agent,
+};
 
 const LIGHT_TEXT_COLOR: &str = "#fff";
 const DARK_TEXT_COLOR: &str = "#333";
@@ -131,9 +136,22 @@ pub fn uppercase_first_letter(s: &str) -> String {
     }
 }
 
+fn agent() -> Agent {
+    let tls_provider = if cfg!(feature = "native-tls") {
+        TlsProvider::NativeTls
+    } else {
+        TlsProvider::Rustls
+    };
+    let config = Config::builder()
+        .tls_config(TlsConfig::builder().provider(tls_provider).build())
+        .build();
+
+    config.new_agent()
+}
+
 /// Create an embeddable logo from the given URI.
 pub fn create_embedded_logo(logo_uri: &str) -> Result<String, BadgeError> {
-    if let Ok(mut uri) = ureq::get(logo_uri).call() {
+    if let Ok(mut uri) = agent().get(logo_uri).call() {
         Ok(uri.body_mut().read_to_string().unwrap())
     } else {
         Err(BadgeError::CannotEmbedLogo(String::from(logo_uri)))
