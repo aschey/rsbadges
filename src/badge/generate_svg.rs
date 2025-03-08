@@ -33,7 +33,6 @@ use super::badge_type::*;
 use super::format_helper;
 use askama::Template;
 use rand::{distributions::Alphanumeric, Rng};
-use regex::Regex;
 
 #[derive(Template, Debug)]
 #[template(path = "badge_template_flat.xml", escape = "xml")]
@@ -95,6 +94,14 @@ struct BadgeTemplateFlat<'a> {
     id_round: &'a str,
 }
 
+/// Minify SVG string
+fn minify_svg_str(svg_str: String) -> String {
+    svg_str
+        .chars()
+        .filter(|c| *c != '\r' && *c != '\n')
+        .collect::<String>()
+}
+
 /// Generate the SVG string corresponding to a Flat badge with this Badge info
 pub(crate) fn flat_svg(badge: &Badge, layout: Layout) -> Result<String, BadgeError> {
     let id_suffix: String = rand::thread_rng()
@@ -137,10 +144,7 @@ pub(crate) fn flat_svg(badge: &Badge, layout: Layout) -> Result<String, BadgeErr
         id_smooth: &id_smooth,
         id_round: &id_round,
     };
-    let re = Regex::new("[\r\n]*").unwrap();
-    Ok(String::from(
-        re.replace_all(&flat_badge.render().unwrap(), ""),
-    ))
+    Ok(minify_svg_str(flat_badge.render().unwrap()))
 }
 
 #[derive(Template, Debug)]
@@ -245,11 +249,7 @@ pub(crate) fn plastic_svg(badge: &Badge, layout: Layout) -> Result<String, Badge
         id_smooth: &id_smooth,
         id_round: &id_round,
     };
-
-    let re = Regex::new("[\r\n]*").unwrap();
-    Ok(String::from(
-        re.replace_all(&plastic_badge.render().unwrap(), ""),
-    ))
+    Ok(minify_svg_str(plastic_badge.render().unwrap()))
 }
 
 #[derive(Template, Debug)]
@@ -335,11 +335,7 @@ pub(crate) fn flat_square_svg(badge: &Badge, layout: Layout) -> Result<String, B
         left_width: layout.label_total_width,
         right_width: layout.msg_total_width,
     };
-
-    let re = Regex::new("[\r\n]*").unwrap();
-    Ok(String::from(
-        re.replace_all(&flat_square_badge.render().unwrap(), ""),
-    ))
+    Ok(minify_svg_str(flat_square_badge.render().unwrap()))
 }
 
 #[derive(Template, Debug)]
@@ -425,11 +421,7 @@ pub(crate) fn for_the_badge_svg(badge: &Badge, layout: Layout) -> Result<String,
         left_width: layout.label_total_width,
         right_width: layout.msg_total_width,
     };
-
-    let re = Regex::new("[\r\n]*").unwrap();
-    Ok(String::from(
-        re.replace_all(&forthebadge_badge.render().unwrap(), ""),
-    ))
+    Ok(minify_svg_str(forthebadge_badge.render().unwrap()))
 }
 
 #[derive(Template, Debug)]
@@ -519,9 +511,5 @@ pub(crate) fn social_svg(badge: &Badge, layout: Layout) -> Result<String, BadgeE
         label_rect_width: layout.label_rect_width,
         msg_rect_width: layout.msg_rect_width,
     };
-
-    let re = Regex::new("[\r\n]*").unwrap();
-    Ok(String::from(
-        re.replace_all(&social_badge.render().unwrap(), ""),
-    ))
+    Ok(minify_svg_str(social_badge.render().unwrap()))
 }
